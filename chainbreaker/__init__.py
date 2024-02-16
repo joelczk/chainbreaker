@@ -202,8 +202,7 @@ class Chainbreaker(object):
                 # I noticed the chainbreaker module does not parse keychain-2.db files which have an SQL header.
                 # We may need to look into that in the future.
                 if not self._is_valid_keychain():
-                    raise ValueError(f'Header signature is not {Chainbreaker.KEYCHAIN_SIGNATURE}'
-                                     f'but {self.header.Signature} for file: \n {self.filepath}')
+                    pass
 
                 self.schema_info, self.table_list = self._get_schema_info(self.header.SchemaOffset)
                 self.table_metadata, self.record_list = self._get_table(self.table_list[0])
@@ -1179,7 +1178,7 @@ def main():
     logging.basicConfig(format='%(asctime)s - %(levelname)s - %(message)s',
                         level=args.loglevel,
                         stream=sys.stdout)
-    logging.info(f'Version - {__version__}')
+    #logging.info(f'Version - {__version__}')
 
     # Calculate the MD5 and SHA256 of the input keychain file.
     try:
@@ -1187,7 +1186,8 @@ def main():
         buf = tmp.read()
         tmp.close()
     except:
-        logging.critical(f'Failed to open the keychain file')
+        print("Failed to open keychain file")
+        #logging.critical(f'Failed to open the keychain file')
         exit(1)
     keychain_md5 = md5(buf).hexdigest()
     keychain_sha256 = sha256(buf).hexdigest()
